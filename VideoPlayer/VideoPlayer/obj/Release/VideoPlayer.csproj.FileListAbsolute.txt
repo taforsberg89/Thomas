@@ -1,0 +1,13 @@
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\bin\Release\VideoPlayer.exe.config
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\bin\Release\VideoPlayer.exe
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\bin\Release\VideoPlayer.pdb
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\MainWindow.baml
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\MainWindow.g.cs
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\App.g.cs
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer_MarkupCompile.cache
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.g.resources
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.Properties.Resources.resources
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.csproj.GenerateResource.Cache
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.exe
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.pdb
+E:\Programming\Projects\VideoPlayer\VideoPlayer\VideoPlayer\obj\Release\VideoPlayer.csprojResolveAssemblyReference.cache
