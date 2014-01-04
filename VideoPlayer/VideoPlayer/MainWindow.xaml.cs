@@ -31,7 +31,8 @@ namespace VideoPlayer
         bool fullscreen = false;
         string sourceFile, nameOfCurrentShow;
         bool paused = false;
-        bool playing = false;
+        bool useFilter = false;
+        string filter;
         
         public MainWindow()
         {
@@ -84,19 +85,17 @@ namespace VideoPlayer
                 {
                     mediaElement.Volume = 1;
                     mediaElement.Play();
-                    playing = true;
+                    
                 }
             }
             catch (Exception ex)
             {
                 
-                if (!mediaElement.IsLoaded)
-                {
-                    statusBar.Foreground = Brushes.Black;
+                statusBar.Foreground = Brushes.Black;
                  
-                }
+                
 
-                statusBar.Text = "Directory contains no .avi or .mp4 files";
+                statusBar.Text = "Current Directory and Filter returns no .avi or .mp4 files";
             }
             
         }
@@ -193,6 +192,18 @@ namespace VideoPlayer
 
         private void loadFiles_Click(object sender, RoutedEventArgs e)
         {
+            
+            System.Windows.Forms.DialogResult messageBoxResult = System.Windows.Forms.MessageBox.Show("Add filter phrase?", "Filter Phrase", MessageBoxButtons.YesNo);
+            if (messageBoxResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                filter = Microsoft.VisualBasic.Interaction.InputBox("Enter Filter String", "Filter String", "", 50, 50);
+                useFilter = true;
+            }
+            else
+            {
+                useFilter = false;
+            }
+            
             FolderBrowserDialog browser = new FolderBrowserDialog();
             browser.Description = "Select source directory\nSub directories are included";
             browser.ShowNewFolderButton = false;
@@ -212,7 +223,16 @@ namespace VideoPlayer
                 try
                 {
                     var di = new DirectoryInfo(path);
-                    var rgFiles = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower()));
+                    IEnumerable<FileInfo> rgFiles;
+                    if (useFilter)
+                    {
+                        rgFiles = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower()) && f.FullName.ToLower().Contains(filter.ToLower()));
+                    }
+                    else
+                    {
+                        rgFiles = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower()));
+                    }
+                    
                     int fileCount = rgFiles.Count();
                     if (fileCount > 0)
                     {
