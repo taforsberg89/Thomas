@@ -37,7 +37,7 @@ namespace VideoPlayer
         public MainWindow()
         {
             InitializeComponent();
-          
+            
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(500);
             timer.Tick += timer_Tick;
@@ -50,6 +50,7 @@ namespace VideoPlayer
             playButton.Visibility = System.Windows.Visibility.Hidden;
             pauseButton.Visibility = System.Windows.Visibility.Hidden;
             statusBar.Visibility = System.Windows.Visibility.Hidden;
+            filterButton.Visibility = System.Windows.Visibility.Hidden;
             onTop.Visibility = System.Windows.Visibility.Hidden;
            
             loadFilesButton.Visibility = System.Windows.Visibility.Hidden;
@@ -62,7 +63,7 @@ namespace VideoPlayer
             playButton.Visibility = System.Windows.Visibility.Visible;
             pauseButton.Visibility = System.Windows.Visibility.Visible;
             onTop.Visibility = System.Windows.Visibility.Visible;
-           
+            filterButton.Visibility = System.Windows.Visibility.Visible;
             statusBar.Visibility = System.Windows.Visibility.Visible;
             loadFilesButton.Visibility = System.Windows.Visibility.Visible;
         }
@@ -192,18 +193,6 @@ namespace VideoPlayer
 
         private void loadFiles_Click(object sender, RoutedEventArgs e)
         {
-            
-            System.Windows.Forms.DialogResult messageBoxResult = System.Windows.Forms.MessageBox.Show("Add filter phrase?", "Filter Phrase", MessageBoxButtons.YesNo);
-            if (messageBoxResult == System.Windows.Forms.DialogResult.Yes)
-            {
-                filter = Microsoft.VisualBasic.Interaction.InputBox("Enter Filter String", "Filter String", "", 50, 50);
-                useFilter = true;
-            }
-            else
-            {
-                useFilter = false;
-            }
-            
             FolderBrowserDialog browser = new FolderBrowserDialog();
             browser.Description = "Select source directory\nSub directories are included";
             browser.ShowNewFolderButton = false;
@@ -219,14 +208,14 @@ namespace VideoPlayer
             string file = null;
             if (!string.IsNullOrEmpty(path))
             {
-                var extensions = new string[] { ".avi", ".mp4", ".mkv" };
+                var extensions = new string[] { ".avi", ".mp4"};
                 try
                 {
                     var di = new DirectoryInfo(path);
                     IEnumerable<FileInfo> rgFiles;
                     if (useFilter)
                     {
-                        rgFiles = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower()) && f.FullName.ToLower().Contains(filter.ToLower()));
+                        rgFiles = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower()) && f.FullName.ToLower().Contains(Properties.Settings.Default["Filter"].ToString().ToLower()));
                     }
                     else
                     {
@@ -304,6 +293,14 @@ namespace VideoPlayer
         {
       
             showUI();
+        }
+
+        private void filterButton_Click_1(object sender, RoutedEventArgs e)
+        {
+            filter = Microsoft.VisualBasic.Interaction.InputBox("Enter Filter String", "Filter String", "", 50, 50);
+            useFilter = true;
+            Properties.Settings.Default["Filter"] = filter;
+            Properties.Settings.Default.Save();
         }
     }
 }
